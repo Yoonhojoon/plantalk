@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import user, plants, species, notifications
+from app.routes import user, plants, species, notifications, auth
 
 app = FastAPI(
     title="Plant Care API",
@@ -18,6 +18,7 @@ app.add_middleware(
 )
 
 # 라우터 등록
+app.include_router(auth.router, prefix="/api", tags=["auth"])
 app.include_router(user.router, prefix="/api", tags=["users"])
 app.include_router(plants.router, prefix="/api", tags=["plants"])
 app.include_router(species.router, prefix="/api", tags=["species"])

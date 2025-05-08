@@ -25,7 +25,7 @@ class PlantSpecies(BaseModel):
 class Plant(BaseModel):
     id: UUID
     user_id: UUID
-    species_id: UUID
+    species_id: Optional[UUID] = None
     name: Optional[str] = None
     image_url: Optional[str] = None
     location: str
