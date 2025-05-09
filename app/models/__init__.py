@@ -29,6 +29,7 @@ class Plant(BaseModel):
     name: Optional[str] = None
     image_url: Optional[str] = None
     location: str
+    sensor_id: Optional[str] = None
     watering_cycle_days: Optional[int] = None
     last_watered_at: Optional[datetime] = None
     next_watering_date: Optional[datetime] = None
@@ -43,6 +44,7 @@ class Plant(BaseModel):
 class PlantStatusLog(BaseModel):
     id: UUID
     plant_id: UUID
+    sensor_id: Optional[str] = None
     temperature: Optional[float] = None
     humidity: Optional[float] = None
     light: Optional[float] = None
@@ -58,4 +60,67 @@ class Notification(BaseModel):
     type: str
     status: str
     created_at: datetime = Field(default_factory=datetime.now)
-    read_at: Optional[datetime] = None 
+    read_at: Optional[datetime] = None
+
+# Supabase 테이블 정의
+TABLES = {
+    "users": {
+        "id": "uuid",
+        "email": "text",
+        "password": "text",
+        "nickname": "text",
+        "created_at": "timestamp with time zone"
+    },
+    "plants": {
+        "id": "uuid",
+        "user_id": "uuid",
+        "species_id": "uuid",
+        "name": "text",
+        "location": "text",
+        "sensor_id": "text",
+        "watering_cycle_days": "integer",
+        "last_watered_at": "timestamp with time zone",
+        "next_watering_date": "timestamp with time zone",
+        "temp_range_min": "float",
+        "temp_range_max": "float",
+        "humidity_range_min": "float",
+        "humidity_range_max": "float",
+        "light_range_min": "float",
+        "light_range_max": "float",
+        "created_at": "timestamp with time zone"
+    },
+    "plant_status_logs": {
+        "id": "uuid",
+        "plant_id": "uuid",
+        "sensor_id": "text",
+        "temperature": "float",
+        "humidity": "float",
+        "light": "float",
+        "emotion": "text",
+        "created_at": "timestamp with time zone"
+    },
+    "species": {
+        "id": "uuid",
+        "name": "text",
+        "scientific_name": "text",
+        "description": "text",
+        "image_url": "text",
+        "temp_range_min": "float",
+        "temp_range_max": "float",
+        "humidity_range_min": "float",
+        "humidity_range_max": "float",
+        "light_range_min": "float",
+        "light_range_max": "float",
+        "created_at": "timestamp with time zone"
+    },
+    "notifications": {
+        "id": "uuid",
+        "user_id": "uuid",
+        "plant_id": "uuid",
+        "title": "text",
+        "type": "text",
+        "status": "text",
+        "created_at": "timestamp with time zone",
+        "read_at": "timestamp with time zone"
+    }
+} 

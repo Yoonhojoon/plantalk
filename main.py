@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import user, plants, species, notifications, auth
+from app.routes import user, plants, species, notifications, auth, notify
 
 app = FastAPI(
     title="Plant Care API",
@@ -23,6 +23,7 @@ app.include_router(user.router, prefix="/api", tags=["users"])
 app.include_router(plants.router, prefix="/api", tags=["plants"])
 app.include_router(species.router, prefix="/api", tags=["species"])
 app.include_router(notifications.router, prefix="/api", tags=["notifications"])
+app.include_router(notify.router, prefix="/api", tags=["notify"])
 
 @app.get("/")
 async def root():

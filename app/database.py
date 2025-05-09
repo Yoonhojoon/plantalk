@@ -20,4 +20,17 @@ async def get_user_by_id(user_id: str):
 
 async def update_user(user_id: str, data: dict):
     response = supabase.table("users").update(data).eq("id", user_id).execute()
+    return response.data
+
+async def get_plant_by_sensor_id(sensor_id: str):
+    try:
+        response = supabase.table("plants").select("*").eq("sensor_id", sensor_id).single().execute()
+        return response.data
+    except Exception as e:
+        if "PGRST116" in str(e):  # 결과가 없는 경우
+            return None
+        raise e  # 다른 오류는 그대로 전파
+
+async def create_plant_status_log(data: dict):
+    response = supabase.table("plant_status_logs").insert(data).execute()
     return response.data 

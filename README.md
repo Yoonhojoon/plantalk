@@ -62,6 +62,11 @@ uvicorn main:app --reload
 | /api/notifications | GET | 사용자의 알림 목록 조회 | - | [{ "id": string, "user_id": string, "plant_id": string, "title": string, "type": string, "status": string, "created_at": datetime, "read_at": datetime }] |
 | /api/notifications/{notification_id} | PATCH | 알림 읽음 처리 | - | 알림 객체 |
 
+6. 센서 데이터 (Sensor Data)
+| 엔드포인트 | 메서드 | 설명 | 요청 본문 | 응답 |
+|------------|--------|------|------------|------|
+| /api/notify | POST | 센서 데이터 수신 및 식물 상태 분석 | { "sensor_id": string, "temperature": number, "humidity": number, "light": number } | { "status": string, "emotion": string, "message": string, "plant_status_log": { "id": string, "plant_id": string, "temperature": number, "humidity": number, "light": number, "emotion": string, "created_at": datetime } } |
+
 주의사항
 모든 API 요청에는 인증이 필요합니다. Authorization 헤더에 Bearer {access_token} 형식으로 토큰을 포함해야 합니다.
 location 필드는 다음 값들만 허용됩니다: "거실", "침실", "주방", "화장실", "베란다", "정원", "실내", "실외"
